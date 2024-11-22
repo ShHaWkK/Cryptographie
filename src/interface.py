@@ -47,7 +47,10 @@ class CryptoApp(QMainWindow):
         
         # Sélection de la méthode
         self.combo_methode = QComboBox()
-        self.combo_methode.addItems(["César", "Substitution", "Vigenère", "Playfair", "AES", "RSA", "Analyse Fréquentielle"])
+        self.combo_methode.addItems([
+            "César", "Substitution", "Vigenère", "Hill", "Vernam", 
+            "Beaufort", "Rail Fence", "AES", "RSA", "Analyse Fréquentielle"
+        ])
         layout_controles.addWidget(QLabel("Méthode:"))
         layout_controles.addWidget(self.combo_methode)
         
@@ -118,10 +121,31 @@ class CryptoApp(QMainWindow):
             if ok:
                 resultat = self.chiffrement_classique.chiffrer_vigenere(texte, cle)
                 self.text_output.setPlainText(resultat)
-        elif methode == "Playfair":
-            cle, ok = QInputDialog.getText(self, "Chiffrement de Playfair", "Entrez la clé:")
+        elif methode == "Hill":
+            cle, ok = QInputDialog.getText(self, "Chiffrement de Hill", "Entrez la clé (matrice sous forme de chaîne):")
             if ok:
-                resultat = self.chiffrement_classique.chiffrer_playfair(texte, cle)
+                try:
+                    resultat = self.chiffrement_classique.chiffrer_hill(texte, cle)
+                    self.text_output.setPlainText(resultat)
+                except Exception as e:
+                    QMessageBox.warning(self, "Erreur", str(e))
+        elif methode == "Vernam":
+            cle, ok = QInputDialog.getText(self, "Chiffrement de Vernam", "Entrez la clé (aussi longue que le texte):")
+            if ok:
+                try:
+                    resultat = self.chiffrement_classique.chiffrer_vernam(texte, cle)
+                    self.text_output.setPlainText(resultat)
+                except ValueError as e:
+                    QMessageBox.warning(self, "Erreur", str(e))
+        elif methode == "Beaufort":
+            cle, ok = QInputDialog.getText(self, "Chiffrement de Beaufort", "Entrez la clé:")
+            if ok:
+                resultat = self.chiffrement_classique.chiffrer_beaufort(texte, cle)
+                self.text_output.setPlainText(resultat)
+        elif methode == "Rail Fence":
+            rails, ok = QInputDialog.getInt(self, "Chiffrement Rail Fence", "Entrez le nombre de rails:")
+            if ok:
+                resultat = self.chiffrement_classique.chiffrer_rail_fence(texte, rails)
                 self.text_output.setPlainText(resultat)
         elif methode == "AES":
             cle, ok = QInputDialog.getText(self, "Chiffrement AES", "Entrez la clé (16, 24 ou 32 caractères):")
@@ -144,7 +168,7 @@ class CryptoApp(QMainWindow):
         if methode == "César":
             decalage, ok = QInputDialog.getInt(self, "Déchiffrement César", "Entrez le décalage:")
             if ok:
-                resultat = self.chiffrement_classique.chiffrer_cesar(texte, -decalage)
+                resultat = self.chiffrement_classique.dechiffrer_cesar(texte, decalage)
                 self.text_output.setPlainText(resultat)
         elif methode == "Substitution":
             cle, ok = QInputDialog.getText(self, "Déchiffrement par Substitution", "Entrez la clé:")
@@ -156,10 +180,31 @@ class CryptoApp(QMainWindow):
             if ok:
                 resultat = self.chiffrement_classique.dechiffrer_vigenere(texte, cle)
                 self.text_output.setPlainText(resultat)
-        elif methode == "Playfair":
-            cle, ok = QInputDialog.getText(self, "Déchiffrement de Playfair", "Entrez la clé:")
+        elif methode == "Hill":
+            cle, ok = QInputDialog.getText(self, "Déchiffrement de Hill", "Entrez la clé (matrice sous forme de chaîne):")
             if ok:
-                resultat = self.chiffrement_classique.dechiffrer_playfair(texte, cle)
+                try:
+                    resultat = self.chiffrement_classique.dechiffrer_hill(texte, cle)
+                    self.text_output.setPlainText(resultat)
+                except Exception as e:
+                    QMessageBox.warning(self, "Erreur", str(e))
+        elif methode == "Vernam":
+            cle, ok = QInputDialog.getText(self, "Déchiffrement de Vernam", "Entrez la clé:")
+            if ok:
+                try:
+                    resultat = self.chiffrement_classique.dechiffrer_vernam(texte, cle)
+                    self.text_output.setPlainText(resultat)
+                except ValueError as e:
+                    QMessageBox.warning(self, "Erreur", str(e))
+        elif methode == "Beaufort":
+            cle, ok = QInputDialog.getText(self, "Déchiffrement de Beaufort", "Entrez la clé:")
+            if ok:
+                resultat = self.chiffrement_classique.dechiffrer_beaufort(texte, cle)
+                self.text_output.setPlainText(resultat)
+        elif methode == "Rail Fence":
+            rails, ok = QInputDialog.getInt(self, "Déchiffrement Rail Fence", "Entrez le nombre de rails:")
+            if ok:
+                resultat = self.chiffrement_classique.dechiffrer_rail_fence(texte, rails)
                 self.text_output.setPlainText(resultat)
         elif methode == "AES":
             cle, ok = QInputDialog.getText(self, "Déchiffrement AES", "Entrez la clé:")
