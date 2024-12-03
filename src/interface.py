@@ -181,18 +181,18 @@ class CryptoApp(QMainWindow):
              cle, ok = QInputDialog.getText(self, "Chiffrement AES", 
                                              "Entrez la clé (16, 24 ou 32 caractères):")
              if ok and len(cle) in [16, 24, 32]:
-                 resultat = self.chiffrement_classique.chiffrer_aes(texte.encode(), cle)  # Assurez-vous que AES est dans ChiffrementClassique ou ChiffrementModerne
+                 resultat = self.chiffrement_classique.chiffrer_aes(texte.encode(), cle)  
                  self.text_output.setPlainText(resultat.decode())
              else:
                  QMessageBox.warning(self, "Erreur", 
                                      "La clé AES doit faire 16, 24 ou 32 caractères.")
 
          elif methode == "RSA":
-             resultat = self.chiffrement_moderne.chiffrer_rsa(texte)  # Assurez-vous que RSA est dans ChiffrementModerne
+             resultat = self.chiffrement_moderne.chiffrer_rsa(texte)  
              self.text_output.setPlainText(resultat)
 
          elif methode == "Analyse Fréquentielle":
-             resultat = self.analyse_avancee.analyse_frequentielle(texte)  # Assurez-vous que cette méthode existe
+             resultat = self.analyse_avancee.analyse_frequentielle(texte)  
              self.text_output.setPlainText(str(resultats))
 
     def action_dechiffrer(self):
@@ -219,7 +219,7 @@ class CryptoApp(QMainWindow):
                                              "Déchiffrement de Vigenère",
                                              "Entrez la clé:")
              if ok:
-                 resultat = self.chiffrement_classique.dechiffrer_vigenere(texte.encode(), cle)  # Assurez-vous que cette méthode existe
+                 resultat = self.chiffrement_classique.dechiffrer_vigenere(texte.encode(), cle)  
                  self.text_output.setPlainText(resultat.decode())
 
          elif methode == "Hill":
