@@ -52,10 +52,10 @@ class Steganographie:
 
         message = ""
         for i in range(len(hidden_bits)):
-            if message[-2:] == "≈":  # Vérifier le caractère de fin
+            if message[-2:] == "≈":  
                 break
             else:
                 message += chr(int(hidden_bits[i], 2))
         
-        return message[:-1]  # Retourner le message sans le caractère de fin
+        return message[:-1]  
 
